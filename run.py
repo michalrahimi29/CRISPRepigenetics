@@ -37,9 +37,8 @@ def initialize():
         elif epigenetics[i] == 'methylation':
             name = 'epi4'
         epigeneticDic[name] = b["epigenetics"].to_numpy()
-    lennaysRun(seqs_protospacer, seqs_pam, seqs_up, seqs_down, weights, labels, epigeneticDic)
-    #lennayPredicionOnHumanCells("hek293", seqs_protospacer, seqs_down, seqs_up, seqs_pam, labels, weights, epigeneticDic)
-    #save_trained_model(seqs_protospacer, seqs_pam, seqs_up, seqs_down, weights, labels, epigeneticDic)
+    #lennaysRun(seqs_protospacer, seqs_pam, seqs_up, seqs_down, weights, labels, epigeneticDic)
+    lennayPredicionOnHumanCells("hek293", seqs_protospacer, seqs_down, seqs_up, seqs_pam, labels, weights, epigeneticDic)
 
 
 def save_trained_model(seqs_protospacer, seqs_pam, seqs_up, seqs_down, weights, labels, epigeneticDic):
