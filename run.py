@@ -11,7 +11,8 @@ def initialize():
     np.random.seed(randomNumSeed)
     tf.random.set_seed(0)
     random.seed(10)
-    epigenetics = sys.argv[1:]
+    flag = sys.argv[1]
+    epigenetics = sys.argv[2:]
     a = pd.read_csv("Final_leenay_dataset.csv")
     seqs_protospacer = a["protospacer"]
     seqs_pam = a["PAM"].tolist()
@@ -37,8 +38,10 @@ def initialize():
         elif epigenetics[i] == 'methylation':
             name = 'epi4'
         epigeneticDic[name] = b["epigenetics"].to_numpy()
-    #lennaysRun(seqs_protospacer, seqs_pam, seqs_up, seqs_down, weights, labels, epigeneticDic)
-    lennayPredicionOnHumanCells("hek293", seqs_protospacer, seqs_down, seqs_up, seqs_pam, labels, weights, epigeneticDic)
+    if flag == '1':
+        lennaysRun(seqs_protospacer, seqs_pam, seqs_up, seqs_down, weights, labels, epigeneticDic)
+    else:
+        lennayPredicionOnHumanCells("hek293", epigeneticDic)
 
 
 def save_trained_model(seqs_protospacer, seqs_pam, seqs_up, seqs_down, weights, labels, epigeneticDic):
