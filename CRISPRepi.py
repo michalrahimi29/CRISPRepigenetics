@@ -65,22 +65,22 @@ def humanTestCell(file, cell_type, epigeneticDic):
     for elem in temp:
         seqs.append(elem[30:62])
     data = np.array(list(map(oneHot, seqs)))
-    b = pd.read_csv(cell_type + "_chromatin_accessibility.csv")
-    c = pd.read_csv(cell_type + "_CTCF_binding.csv")
-    d = pd.read_csv(cell_type + "_H3K4ME3.csv")
-    Newepi = b["epigenetics"].to_numpy()
-    Newepi2 = c["epigenetics"].to_numpy()
-    Newepi3 = d["epigenetics"].to_numpy()
     index = 4
     # adding epigenetic information to sequence input
     for key in epigeneticDic.keys():
         if key == 'epi1':
+            b = pd.read_csv(cell_type + "_chromatin_accessibility.csv")
+            Newepi = b["epigenetics"].to_numpy()
             data = addEpi(Newepi, data, index)
             index += 1
         elif key == 'epi2':
+            c = pd.read_csv(cell_type + "_CTCF_binding.csv")
+            Newepi2 = c["epigenetics"].to_numpy()
             data = addEpi(Newepi2, data, index)
             index += 1
         elif key == 'epi3':
+            d = pd.read_csv(cell_type + "_H3K4ME3.csv")
+            Newepi3 = d["epigenetics"].to_numpy()
             data = addEpi(Newepi3, data, index)
             index += 1
         elif key == 'epi4':
@@ -114,20 +114,17 @@ def lennaysRun(protospacer, pam, up, down, weights, labels, epigenetics):
 
 
 # used for evaluation of the model on different cell types. works on k562+hek293+hct116+H1
-def lennayPredicionOnHumanCells(cell_type, protospacer, down, up, pam, labels, weights, epigenetics):
-    data = createTrainSet(protospacer, down, up, pam, epigenetics)
+def lennayPredicionOnHumanCells(cell_type, epigenetics):
     data_test = humanTestCell("hek293+k562+hct116_efficicency.csv", cell_type, epigenetics)
     a = pd.read_csv("hek293+k562+hct116_efficicency.csv")
     key = "efficiency_" + cell_type
     labels_test = a[key].to_numpy()
-    # in case some guides don't have efficiency value for specific cell_type
     """
+    # in case some guides don't have efficiency value for specific cell_type
     to_delete = np.argwhere(np.isnan(labels_test)).flatten()
     labels_test = np.delete(labels_test, to_delete)
     data_test = np.delete(data_test, to_delete, 0)
     data_train, labels_train = shuffle(data, labels)
-    model1 = leenay_Model(data)
-    model1.fit(data_train, labels_train, epochs=25, batch_size=16, verbose=1, sample_weight=weights)
     """
     model1 = keras.models.load_model("CRISPRepi_model.keras")
     pred_test1 = model1.predict(data_test)
