@@ -23,6 +23,8 @@ python run.py 1 chromatin_accessibility CTCF_binding
 ```
 ### Model evaluation on other human cell types:
 For evaluating the model on the human cell types: HEK293, HCT116, K562 the first input should be the wanted cell type and and afterward give the epigenetic marks you would like to use: chromatin_accessibility, CTCF_binding, H3K4me3, methylation.
+
+
 For training the model on the Leenay et al. dataset and evaluating on K562 with all epigenetic marks:
 ```python
 python run.py K562 chromatin_accessibility CTCF_binding H3K4me3 methylation
