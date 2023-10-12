@@ -84,6 +84,10 @@ def humanTestCell(file, cell_type, epigeneticDic):
             data = addEpi(Newepi3, data, index)
             index += 1
         elif key == 'epi4':
+            # since there is no information about methylation in other human cell types there is a need to know how
+            # much sequences other cell types have
+            b = pd.read_csv(cell_type + "_chromatin_accessibility.csv")
+            Newepi = b["epigenetics"].to_numpy()
             data = avg_Methylation(epigeneticDic['epi4'], data, len(Newepi), index)
             index += 1
     return data
@@ -114,19 +118,15 @@ def lennaysRun(protospacer, pam, up, down, weights, labels, epigenetics):
 
 
 # used for evaluation of the model on different cell types. works on k562+hek293+hct116+H1
-def lennayPredicionOnHumanCells(cell_type, epigenetics):
+def lennayPredicionOnHumanCells(protospacer, pam, up, down, labels, cell_type, weights, epigenetics):
     data_test = humanTestCell("hek293+k562+hct116_efficicency.csv", cell_type, epigenetics)
     a = pd.read_csv("hek293+k562+hct116_efficicency.csv")
     key = "efficiency_" + cell_type
     labels_test = a[key].to_numpy()
-    """
-    # in case some guides don't have efficiency value for specific cell_type
-    to_delete = np.argwhere(np.isnan(labels_test)).flatten()
-    labels_test = np.delete(labels_test, to_delete)
-    data_test = np.delete(data_test, to_delete, 0)
+    data = createTrainSet(protospacer, down, up, pam, epigenetics)
     data_train, labels_train = shuffle(data, labels)
-    """
-    model1 = keras.models.load_model("CRISPRepi_model.keras")
+    model1 = leenay_Model(data)
+    model1.fit(data_train, labels_train, epochs=25, batch_size=16, verbose=1, sample_weight=weights)
     pred_test1 = model1.predict(data_test)
     pred_test = pred_test1
     print(spearmanr(labels_test, pred_test.reshape(len(pred_test))))
