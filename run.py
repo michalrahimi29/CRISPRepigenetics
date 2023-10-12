@@ -47,7 +47,8 @@ def initialize():
 def save_trained_model(seqs_protospacer, seqs_pam, seqs_up, seqs_down, weights, labels, epigeneticDic):
     data = createTrainSet(seqs_protospacer, seqs_down, seqs_up, seqs_pam, epigeneticDic)
     modeli = leenay_Model(data)
-    modeli.fit(data, labels, epochs=25, batch_size=16, verbose=1, sample_weight=weights)
+    data_train, labels_train = shuffle(data, labels)
+    modeli.fit(data_train, labels_train, epochs=25, batch_size=16, verbose=1, sample_weight=weights)
     modeli.save("CRISPRepi_model.keras")
     #reconstructed_model = keras.models.load_model("CRISPRepi_model.keras")  # use this line for uploading the trained model
 
