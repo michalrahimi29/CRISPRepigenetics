@@ -21,3 +21,5 @@ For training and evaluating the model on the Leenay et al. dataset with the epig
 ```python
 python run.py 1 chromatin_accessibility CTCF_binding
 ```
+### Model evaluation on other human cell types:
+For evaluating the model on the human cell types: hek293, hct116, k562
