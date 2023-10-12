@@ -12,3 +12,9 @@ The model is implemented with Keras 2.8.4 using Tensorflow backend and numpy 1.2
 To run CRISPRepi follow the instruction bellow:
 
 ### Model Training and evaluation:
+For traning the model and evaluating it with specific epigenetic marks utilizing the Leenay et al. dataset: First input should be 1 and afterward give the epigenetic marks you would like to use: chromatin_accessibility, CTCF_binding, H3K4me3, methylation.
+\```python
+def hello_world():
+    print("Hello, World!")
+\```
+
