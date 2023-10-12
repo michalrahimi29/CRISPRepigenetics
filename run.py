@@ -41,7 +41,7 @@ def initialize():
     if flag == '1':
         lennaysRun(seqs_protospacer, seqs_pam, seqs_up, seqs_down, weights, labels, epigeneticDic)
     else:
-        lennayPredicionOnHumanCells("hek293", epigeneticDic)
+        lennayPredicionOnHumanCells(flag, epigeneticDic)
 
 
 def save_trained_model(seqs_protospacer, seqs_pam, seqs_up, seqs_down, weights, labels, epigeneticDic):
