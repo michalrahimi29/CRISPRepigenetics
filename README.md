@@ -19,5 +19,5 @@ python run.py 1
 ```
 For training and evaluating the model on the Leenay et al. dataset with the epigentic marks- chromatin_accessibility, CTCF_binding:
 ```python
-python run.py 1 chromatin_accessibility, CTCF_binding
+python run.py 1 chromatin_accessibility CTCF_binding
 ```
