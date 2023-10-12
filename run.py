@@ -33,7 +33,7 @@ def initialize():
             name = 'epi1'
         elif epigenetics[i] == 'CTCF_binding':
             name = 'epi2'
-        elif epigenetics[i] == 'H3K4ME3':
+        elif epigenetics[i] == 'H3K4me3':
             name = 'epi3'
         elif epigenetics[i] == 'methylation':
             name = 'epi4'
@@ -41,7 +41,7 @@ def initialize():
     if flag == '1':
         lennaysRun(seqs_protospacer, seqs_pam, seqs_up, seqs_down, weights, labels, epigeneticDic)
     else:
-        lennayPredicionOnHumanCells(flag, epigeneticDic)
+        lennayPredicionOnHumanCells(seqs_protospacer, seqs_pam, seqs_up, seqs_down, labels, flag, weights, epigeneticDic)
 
 
 def save_trained_model(seqs_protospacer, seqs_pam, seqs_up, seqs_down, weights, labels, epigeneticDic):
