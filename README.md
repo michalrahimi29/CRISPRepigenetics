@@ -22,4 +22,17 @@ For training and evaluating the model on the Leenay et al. dataset with the epig
 python run.py 1 chromatin_accessibility CTCF_binding
 ```
 ### Model evaluation on other human cell types:
-For evaluating the model on the human cell types: HEK293, HCT116, K562
+For evaluating the model on the human cell types: HEK293, HCT116, K562 the first input should be the wanted cell type and and afterward give the epigenetic marks you would like to use: chromatin_accessibility, CTCF_binding, H3K4me3, methylation.
+For training the model on the Leenay et al. dataset and evaluating on K562 with all epigenetic marks:
+```python
+python run.py K562 chromatin_accessibility CTCF_binding H3K4me3 methylation
+```
+For training the model on the Leenay et al. dataset and evaluating on HCT116 with epigenetic mark: chromatin_accessibility:
+```python
+python run.py HCT116 chromatin_accessibility
+```
+### Model for further use:
+For further use with the trained model on the entire Leenay et al. dataset with the four epigenetic marks use the following code:
+```python
+reconstructed_model = keras.models.load_model("CRISPRepi_model.keras")
+```
