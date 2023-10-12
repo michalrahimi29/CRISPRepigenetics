@@ -11,4 +11,4 @@ The model is implemented with Keras 2.8.4 using Tensorflow backend and numpy 1.2
 # Run
 To run CRISPRepi follow the instruction bellow:
 
-## Model Training and evaluation:
+### Model Training and evaluation:
