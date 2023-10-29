@@ -3,14 +3,14 @@ import random
 import tensorflow as tf
 from CRISPRepi import *
 
-
 randomNumSeed = 123
 np.random.seed(randomNumSeed)
 tf.random.set_seed(0)
 random.seed(10)
+"""This file finds the permutation of flanking sequences with best result"""
 
 
-# file maker of the 5CV of every flanking sequences permutation
+# File maker of the 5 cross-validation of every flanking sequences permutation
 def optimalLength():
     f = open('optimal Length.csv', 'w', newline='')
     writer = csv.writer(f)
@@ -22,7 +22,6 @@ def optimalLength():
             writer.writerow([i, j, acc])
 
 
-# performance measurement of optimal len
 def findLen(up, down):
     data = createTrainSet(up, down, seqs_protospacer, seqs_down, seqs_up, seqs_pam, {})
     k = 5
@@ -43,6 +42,19 @@ def findLen(up, down):
     return sumspearman / k
 
 
+# Get the permutation of flanking sequences with best result
+def getBest():
+    a = pd.read_csv("optimal Length.csv")
+    vals = a["result"].tolist()
+    up = a["Up"].tolist()
+    down = a["Down"].tolist()
+    maxV = max(vals)
+    jindex = vals.index(maxV)
+    upLen = up[jindex]
+    downLen = down[jindex]
+    print(str(upLen) + "," + str(downLen) + "," + str(maxV))
+
+
 if __name__ == '__main__':
     a = pd.read_csv("Final_leenay_dataset.csv")
     seqs_protospacer = a["protospacer"]
@@ -57,3 +69,4 @@ if __name__ == '__main__':
     weights = W + epsilon
     l = np.divide(no_var, reads)
     labels = np.subtract(1.0, l)
+    #getBest()
