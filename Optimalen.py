@@ -52,10 +52,6 @@ def getBest():
 
 
 if __name__ == '__main__':
-    randomNumSeed = 123
-    np.random.seed(randomNumSeed)
-    tf.random.set_seed(0)
-    random.seed(10)
     a = pd.read_csv("Final_leenay_dataset.csv")
     seqs_protospacer = a["protospacer"]
     seqs_pam = a["PAM"].tolist()
@@ -69,5 +65,5 @@ if __name__ == '__main__':
     weights = W + epsilon
     l = np.divide(no_var, reads)
     labels = np.subtract(1.0, l)
-    optimalLength()
+    #optimalLength()
     getBest()
