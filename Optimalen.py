@@ -3,11 +3,7 @@ import random
 import tensorflow as tf
 from CRISPRepi import *
 
-randomNumSeed = 123
-np.random.seed(randomNumSeed)
-tf.random.set_seed(0)
-random.seed(10)
-"""This file finds the permutation of flanking sequences with best result"""
+"""This file finds the permutation of flanking sequences that gives the best result"""
 
 
 # File maker of the 5 cross-validation of every flanking sequences permutation
@@ -56,6 +52,10 @@ def getBest():
 
 
 if __name__ == '__main__':
+    randomNumSeed = 123
+    np.random.seed(randomNumSeed)
+    tf.random.set_seed(0)
+    random.seed(10)
     a = pd.read_csv("Final_leenay_dataset.csv")
     seqs_protospacer = a["protospacer"]
     seqs_pam = a["PAM"].tolist()
@@ -69,4 +69,5 @@ if __name__ == '__main__':
     weights = W + epsilon
     l = np.divide(no_var, reads)
     labels = np.subtract(1.0, l)
-    #getBest()
+    optimalLength()
+    getBest()
