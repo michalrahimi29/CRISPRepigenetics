@@ -11,7 +11,8 @@ def initialize():
     np.random.seed(randomNumSeed)
     tf.random.set_seed(0)
     random.seed(10)
-    epigenetics = sys.argv[1:]
+    flag = sys.argv[1]
+    epigenetics = sys.argv[2:]
     a = pd.read_csv("Final_leenay_dataset.csv")
     seqs_protospacer = a["protospacer"]
     seqs_pam = a["PAM"].tolist()
@@ -32,20 +33,22 @@ def initialize():
             name = 'epi1'
         elif epigenetics[i] == 'CTCF_binding':
             name = 'epi2'
-        elif epigenetics[i] == 'H3K4ME3':
+        elif epigenetics[i] == 'H3K4me3':
             name = 'epi3'
         elif epigenetics[i] == 'methylation':
             name = 'epi4'
         epigeneticDic[name] = b["epigenetics"].to_numpy()
-    lennaysRun(seqs_protospacer, seqs_pam, seqs_up, seqs_down, weights, labels, epigeneticDic)
-    #lennayPredicionOnHumanCells("hek293", seqs_protospacer, seqs_down, seqs_up, seqs_pam, labels, weights, epigeneticDic)
-    #save_trained_model(seqs_protospacer, seqs_pam, seqs_up, seqs_down, weights, labels, epigeneticDic)
+    if flag == '1':
+        lennaysRun(seqs_protospacer, seqs_pam, seqs_up, seqs_down, weights, labels, epigeneticDic)
+    else:
+        lennayPredicionOnHumanCells(seqs_protospacer, seqs_pam, seqs_up, seqs_down, labels, flag, weights, epigeneticDic)
 
 
 def save_trained_model(seqs_protospacer, seqs_pam, seqs_up, seqs_down, weights, labels, epigeneticDic):
     data = createTrainSet(seqs_protospacer, seqs_down, seqs_up, seqs_pam, epigeneticDic)
     modeli = leenay_Model(data)
-    modeli.fit(data, labels, epochs=25, batch_size=16, verbose=1, sample_weight=weights)
+    data_train, labels_train = shuffle(data, labels)
+    modeli.fit(data_train, labels_train, epochs=25, batch_size=16, verbose=1, sample_weight=weights)
     modeli.save("CRISPRepi_model.keras")
     #reconstructed_model = keras.models.load_model("CRISPRepi_model.keras")  # use this line for uploading the trained model
 
